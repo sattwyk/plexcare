@@ -56,6 +56,10 @@ Alternatively, you can set an environment variable in your shell configuration f
 export NIX_CONFIG="experimental-features = nix-command flakes"
 ```
 
+4. Nix Develop
+```bash
+nix develop
+```
 
 ## Usage
 
