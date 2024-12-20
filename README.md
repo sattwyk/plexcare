@@ -36,7 +36,26 @@ This project demonstrates efficient use of the Postman API platform for interact
 
 ## Installation
 
-[Provide step-by-step instructions on how to set up and run your project locally]
+
+1. Install Nix
+
+```bash
+sh <(curl -L https://nixos.org/nix/install) --daemon
+```
+
+2. Edit nix.conf:
+Add the following lines to your /etc/nix/nix.conf file:
+```bash
+experimental-features = nix-command flakes
+```
+- use sudo vi to edit the file
+
+3. Set Environment Variable:
+Alternatively, you can set an environment variable in your shell configuration file (e.g., .bashrc or .zshrc):
+```bash
+export NIX_CONFIG="experimental-features = nix-command flakes"
+```
+
 
 ## Usage
 
