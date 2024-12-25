@@ -1,9 +1,8 @@
 
+import { createClient } from '@libsql/client/web';
 import { drizzle } from 'drizzle-orm/libsql';
+import * as schema from './schema'
 
-export const db = drizzle({
-    connection: {
-        url: process.env.DATABASE_URL!,
-    }
-});
+const client = createClient({url : process.env.DATABASE_URL! || "http://localhost:8080",});   
 
+export const db = drizzle(client,{schema});

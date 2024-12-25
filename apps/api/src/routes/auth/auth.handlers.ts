@@ -1,14 +1,25 @@
 import * as HttpStatusCodes from 'stoker/http-status-codes';
-// import * as HttpStatusPhrases from "stoker/http-status-phrases";
 import type { AppRouteHandler } from '../../lib/types';
-import { ZOD_ERROR_CODES, ZOD_ERROR_MESSAGES } from '../../lib/constants';
 import type { AuthRoute } from './auth.routes';
+import { db } from "db";
+import { usersTable } from "db/src/schema";
 
 export const auth: AppRouteHandler<AuthRoute> = async (c) => {
-	return c.json(
-		{
-			message: 'This is will be the auth route',
-		},
-		HttpStatusCodes.OK
-	);
+    try {
+        // const newUser = await db.select().from(usersTable).all();
+        return c.json(
+            {
+                message: 'Auth route with DB connection',
+                // newUser
+            },
+            HttpStatusCodes.OK
+        );
+    } catch (error) {
+        return c.json(
+            {
+                message: 'Database error occurred'
+            },
+            HttpStatusCodes.INTERNAL_SERVER_ERROR
+        );
+    }
 };

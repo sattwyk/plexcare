@@ -7,6 +7,7 @@ import { jsonContent, jsonContentRequired } from 'stoker/openapi/helpers';
 export const hello = createRoute({
 	path: '/hello',
 	method: 'get',
+	tags: ['Patients'],
 	request: {},
 	responses: {
 		[HttpStatusCodes.OK]: jsonContent(z.object({ message: z.string() }), 'hello there'),
