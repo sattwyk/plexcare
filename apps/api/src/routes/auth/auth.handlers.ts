@@ -1,16 +1,18 @@
 import * as HttpStatusCodes from 'stoker/http-status-codes';
 import type { AppRouteHandler } from '../../lib/types';
 import type { AuthRoute } from './auth.routes';
+import * as betterAuth from '../../lib/auth'
 import { db } from "db";
 import { usersTable } from "db/src/schema";
 
 export const auth: AppRouteHandler<AuthRoute> = async (c) => {
+    const auth = betterAuth.auth.handler(c.req.raw)
     try {
-        // const newUser = await db.select().from(usersTable).all();
         return c.json(
             {
                 message: 'Auth route with DB connection',
-                // newUser
+                auth
+                
             },
             HttpStatusCodes.OK
         );
