@@ -6,8 +6,14 @@ import { db } from "db";
 import { usersTable } from "db/src/schema";
 
 export const auth: AppRouteHandler<AuthRoute> = async (c) => {
-    const auth = betterAuth.auth.handler(c.req.raw)
     try {
+        const req:any = await c.req.raw.json().catch(() => null);
+        
+        if (!req) {
+            throw new Error('No request body');
+        }
+        const authResponse = await betterAuth.auth.handler(c.req.raw);
+
         return c.json(
             {
                 message: 'Auth route with DB connection',
@@ -16,12 +22,12 @@ export const auth: AppRouteHandler<AuthRoute> = async (c) => {
             },
             HttpStatusCodes.OK
         );
-    } catch (error) {
+    } catch (error: any) {      
         return c.json(
             {
-                message: 'Database error occurred'
+                message: error?.message || 'Auth failed',
             },
-            HttpStatusCodes.INTERNAL_SERVER_ERROR
+            HttpStatusCodes.BAD_REQUEST
         );
     }
 };

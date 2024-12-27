@@ -8,9 +8,9 @@ export const auth = betterAuth({
   }),
   socialProviders: {
     google: {
-      clientId: process.env.GOOGLE_CLIENT_ID! || "1",
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET! || "sadasd",
-      redirectUri: process.env.GOOGLE_REDIRECT_URI! || "/auth/google/callback"
+      clientId: "1",
+      clientSecret: "sadasd",
+      redirectURI: 'http://localhost:8787/api/auth/google/callback'
     }
   }
 })

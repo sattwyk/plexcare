@@ -19,6 +19,10 @@ function makeRoute(method: 'get' | 'post') {
             [HttpStatusCodes.INTERNAL_SERVER_ERROR]: jsonContent(
                 z.object({}),
                 'If Error occurs'
+            ),
+            [HttpStatusCodes.BAD_REQUEST]: jsonContent(
+                z.object({}),
+                'if empty request body'
             )
         },
     });
