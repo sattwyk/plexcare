@@ -1,40 +1,54 @@
-import { useQuery } from '@tanstack/react-query';
+import { signIn, signUp, signOut, useSession } from './lib/auth-client';
 import './App.css';
-// import { apiClient } from './lib/api-client';
 
-async function fetchPosts() {
-  const res = await client.users.$get();
+function AuthContent() {
+  const { data, isPending, error } = useSession();
 
-  if (!res.ok) {
-    throw new Error('Network error');
-  }
+  const handleSignIn = () => {
+    signIn.email({
+      email: "user@example.com",
+      password: "password",
+    });
+  };
 
-  return res.json();
-}
-
-import { client } from 'api';
-function App() {
-  const { isPending, isError, data, error } = useQuery({
-    queryKey: ['posts'],
-    queryFn: fetchPosts,
-  });
+  const handleSignUp = () => {
+    signUp.email({
+      email: "user@example.com",
+      password: "password",
+      name: 'username'
+    });
+  };
 
   if (isPending) {
-    return <span>Loading...</span>;
+    return <div>Loading...</div>;
   }
 
-  if (isError) {
-    return <span>Error: {error.message}</span>;
+  if (error) {
+    return <div>Error: {error.message}</div>;
   }
 
   return (
-    <>
-      <div>
-        {data.map((user) => (
-          <div key={post.id}>{post.content}</div>
-        ))}
-      </div>
-    </>
+    <div>
+      {data ? (
+        <div>
+          <p>Welcome, {data.user.email}</p>
+          <button onClick={() => signOut()}>Sign Out</button>
+        </div>
+      ) : (
+        <div>
+          <button onClick={handleSignIn}>Sign In</button>
+          <button onClick={handleSignUp}>Sign Up</button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <div>
+      <AuthContent />
+    </div>
   );
 }
 
